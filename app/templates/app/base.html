@@ -87,16 +87,19 @@
                         <li><a class="dropdown-item" href="#">Log out</a></li>
                     </ul>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'cart' %}"><i class="fa-solid fa-cart-shopping"></i> Cart</a>
-                </li>
-                <li class="nav-item">
+                <li class="nav-item hidden">
                     <a class="nav-link" href="#">Login</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item hidden">
                     <a class="nav-link" href="#">Register</a>
                 </li>
             </ul>
+            <div class="form-inline my-2 my-lg-0 cart-icon-wrapper">
+                <a href="{% url 'cart' %}">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                </a>
+                <p class="cart-total" style="position: absolute;top: 1px;right: 4px;">{{ cartItems }}</p>
+            </div>
         </div>
     </nav>
     {% block baner-slider %}{% endblock baner-slider %}
