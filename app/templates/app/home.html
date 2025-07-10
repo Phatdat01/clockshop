@@ -57,7 +57,7 @@
         <img src="{{product.Image_URL}}" alt="" class="thumbnail">
         <div class="box-element product">
             <h5>{{product.name}}</h5>
-            <button class="btn btn-outline-secondary add-btn">Add to Cart</button>
+            <button data-product={{product.id}} data-action="add" class="btn btn-outline-secondary add-btn update-cart">Add to Cart</button>
             <a href="" class="btn btn-outline-secondary add-btn">View</a>
             <h3 style="display: inline-block; float: right;"><strong>$ {{product.price}}</strong></h3>
         </div>
