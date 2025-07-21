@@ -21,6 +21,15 @@ from . import views
 urlpatterns = [
     path('', views.home, name='home'),
     path('cart/', views.cart, name='cart'),
+    path('cart', views.cart, name='cart'),
     path('checkout/', views.checkout, name='checkout'),
+    path('checkout', views.checkout, name='checkout'),
     path('update_item/', views.update_item, name='update_item'),
+    path('update_item', views.update_item, name='update_item'),
+    path('register/', views.register, name='register'),
+    path('register', views.register, name='register'),
+    path('login/', views.login_page, name='login'),
+    path('login', views.login_page, name='login'),
+    path('logout/', views.logout_page, name='logout'),
+    path('logout', views.login_page, name='login'),
 ]
