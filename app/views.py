@@ -8,7 +8,6 @@ import json
 
 # Create your views here.
 def home(request):
-    products = Product.objects.all()
     if request.user.is_authenticated:
         customer = request.user
         order, created = Order.objects.get_or_create(customer=customer, complete=False)
@@ -22,7 +21,9 @@ def home(request):
         user_not_login = 'visible'
         user_login = 'hidden'
         cartItems = order['get_cart_items']
-    context = {'products': products, 'cartItems': cartItems, 'user_not_login': user_not_login, 'user_login': user_login}
+    categories = Category.objects.filter(is_sub=False)
+    products = Product.objects.all()
+    context = {'categories':categories,'products': products, 'cartItems': cartItems, 'user_not_login': user_not_login, 'user_login': user_login}
     return render(request, 'app/home.html', context)
 
 def cart(request):
@@ -34,7 +35,8 @@ def cart(request):
     else:
         items = []
         order = {'get_cart_total': 0, 'get_cart_items': 0}
-    context = {'items': items, 'order': order, 'cartItems': cartItems}
+    categories = Category.objects.filter(is_sub=False)
+    context = {'categories':categories,'items': items, 'order': order, 'cartItems': cartItems}
     return render(request, 'app/cart.html', context)
 
 def checkout(request):
@@ -125,3 +127,13 @@ def search(request):
         cartItems = order['get_cart_items']
     products = Product.objects.all()
     return render(request, 'app/search.html', {"search":search_query,'keys': keys, 'cartItems': cartItems, 'products': products})
+
+def category(request):
+    categories = Category.objects.filter(is_sub=False)
+    active_category = request.GET.get('category', "")
+    if active_category:
+        products = Product.objects.filter(Category__slug=active_category)
+    else:
+        products = Product.objects.all()
+    context = {'categories': categories, 'products': products, 'active_category': active_category}
+    return render(request, 'app/category.html', context)
