@@ -17,6 +17,7 @@ class Product(models.Model):
     digital = models.BooleanField(blank=True, null=True)
     image = models.ImageField(null=True, blank=True)
     Category =models.ManyToManyField(Category, blank=True, related_name='products')
+    detail = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return self.name

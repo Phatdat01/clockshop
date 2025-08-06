@@ -36,4 +36,6 @@ urlpatterns = [
     path('search', views.search, name='search'),
     path('category/', views.category, name='category'),
     path('category', views.category, name='category'),
+    path('detail/', views.detail, name='detail'),
+    path('detail', views.detail, name='detail'),
 ]
