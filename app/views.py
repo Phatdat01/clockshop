@@ -14,10 +14,15 @@ def home(request):
         order, created = Order.objects.get_or_create(customer=customer, complete=False)
         items = order.orderitem_set.all()
         cartItems = order.get_cart_items
+        user_not_login = 'hidden'
+        user_login = 'visible'
     else:
         items = []
         order = {'get_cart_total': 0, 'get_cart_items': 0}
-    context = {'products': products, 'cartItems': cartItems}
+        user_not_login = 'visible'
+        user_login = 'hidden'
+        cartItems = order['get_cart_items']
+    context = {'products': products, 'cartItems': cartItems, 'user_not_login': user_not_login, 'user_login': user_login}
     return render(request, 'app/home.html', context)
 
 def cart(request):
@@ -106,4 +111,17 @@ def logout_page(request):
     return redirect('login')
 
 def search(request):
-    return render(request, 'app/search.html')
+    if request.method == 'POST':
+        search_query = request.POST.get('search', '')
+        keys = Product.objects.filter(name__contains=search_query)
+    if request.user.is_authenticated:
+        customer = request.user.customer
+        order, created = Order.objects.get_or_create(customer=customer, complete=False)
+        items = order.orderitem_set.all()
+        cartItems = order.get_cart_items
+    else:
+        items = []
+        order = {'get_cart_total': 0, 'get_cart_items': 0}
+        cartItems = order['get_cart_items']
+    products = Product.objects.all()
+    return render(request, 'app/search.html', {"search":search_query,'keys': keys, 'cartItems': cartItems, 'products': products})
